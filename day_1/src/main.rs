@@ -1,11 +1,4 @@
-extern crate core;
-
-use std::cmp::Ordering;
-use std::error::Error;
-use std::fs::File;
-use std::io;
-use std::io::prelude::*;
-use std::path::Path;
+use std::{cmp::Ordering, error::Error, fs::File, io::BufReader, io::prelude::*, path::Path};
 
 const INPUT_FILE_PATH: &str = "src/input.txt";
 
@@ -58,7 +51,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let mut elves: Vec<Elve> = vec![Elve { items: vec![] }];
 
-    for line in io::BufReader::new(&file).lines() {
+    for line in BufReader::new(&file).lines() {
         let line_content = line?;
 
         if line_content.eq("") {
