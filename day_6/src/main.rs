@@ -15,8 +15,8 @@ impl SlidingWindow<'_> {
         for (index, window) in self.buffer.windows(self.window_size).enumerate() {
             self.character_set.clear();
 
-            for char_index in 0..self.window_size {
-                self.character_set.insert(window[char_index] as char);
+            for character in window {
+                self.character_set.insert(*character as char);
             }
 
             if self.character_set.len() == self.window_size {
@@ -35,7 +35,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // This only works, because we absolutely know that our string contains asci chars only.
     let mut packet_sliding_window = SlidingWindow {
-        buffer: &buffer.as_bytes(),
+        buffer: buffer.as_bytes(),
         window_size: 4,
         character_set: &mut character_set,
     };
@@ -43,7 +43,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("packet marker index: {}", packet_marker);
 
     let mut message_sliding_window = SlidingWindow {
-        buffer: &buffer.as_bytes(),
+        buffer: buffer.as_bytes(),
         window_size: 14,
         character_set: &mut character_set,
     };
