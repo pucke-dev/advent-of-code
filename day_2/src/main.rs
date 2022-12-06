@@ -136,7 +136,7 @@ impl GameWithOutcome<'_> {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let path = Path::new(INPUT_FILE_PATH);
-    let file = File::open(&path)?;
+    let file = File::open(path)?;
 
     let mut my_total_score: i32 = 0;
     let mut my_new_total_score: i32 = 0;
@@ -144,7 +144,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     for line in io::BufReader::new(&file).lines() {
         let line_content = line?;
 
-        let strategy_guide: Vec<&str> = line_content.split(" ").collect();
+        let strategy_guide: Vec<&str> = line_content.split(' ').collect();
 
         let player_1 = Player::new(strategy_guide[0]);
         let player_2 = Player::new(strategy_guide[1]);

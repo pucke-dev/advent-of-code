@@ -10,6 +10,8 @@ use itertools::{Chunk, Itertools};
 
 const INPUT_FILE_PATH: &str = "src/input.txt";
 
+struct Backpacks(HashSet<char>, HashSet<char>, HashSet<char>);
+
 fn get_char_value(char: &char) -> i32 {
     match char {
         'a' => 1,
@@ -74,9 +76,8 @@ fn split_in_half(string: &String) -> (&str, &str) {
 
 fn get_backpacks_from<'a>(
     chunk: Chunk<'a, Lines<BufReader<&'a File>>>,
-) -> Result<(HashSet<char>, HashSet<char>, HashSet<char>), String> {
-    let mut backpacks: (HashSet<char>, HashSet<char>, HashSet<char>) =
-        (HashSet::new(), HashSet::new(), HashSet::new());
+) -> Result<Backpacks, String> {
+    let mut backpacks: Backpacks = Backpacks(HashSet::new(), HashSet::new(), HashSet::new());
 
     for (index, content) in chunk.enumerate() {
         match index {
@@ -92,7 +93,7 @@ fn get_backpacks_from<'a>(
 
 fn main() -> Result<(), Box<dyn Error>> {
     let path = Path::new(INPUT_FILE_PATH);
-    let mut file = File::open(&path)?;
+    let mut file = File::open(path)?;
 
     let mut duplicate_item_in_compartments_sum = 0;
     for line in BufReader::new(&file).lines() {

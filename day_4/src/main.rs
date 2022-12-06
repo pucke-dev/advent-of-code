@@ -21,9 +21,9 @@ impl Section {
 }
 
 fn parse_line_into_sections(line: String) -> (Section, Section) {
-    let (s1, s2) = line.split_once(",").expect("Could not split at char `,`");
-    let (s1_start, s1_end) = s1.split_once("-").expect("Could not split at char `-`");
-    let (s2_start, s2_end) = s2.split_once("-").expect("Could not split at char `-`");
+    let (s1, s2) = line.split_once(',').expect("Could not split at char `,`");
+    let (s1_start, s1_end) = s1.split_once('-').expect("Could not split at char `-`");
+    let (s2_start, s2_end) = s2.split_once('-').expect("Could not split at char `-`");
 
     (
         Section {
@@ -39,7 +39,7 @@ fn parse_line_into_sections(line: String) -> (Section, Section) {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let path = Path::new(INPUT_FILE_PATH);
-    let file = File::open(&path)?;
+    let file = File::open(path)?;
 
     let mut fully_overlapping_sections: i32 = 0;
     let mut partially_overlapping_sections: i32 = 0;

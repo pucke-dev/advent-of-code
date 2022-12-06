@@ -50,6 +50,7 @@ impl Instruction {
 
 enum CrateMover {
     V9000,
+    #[allow(dead_code)]
     V9001,
 }
 
@@ -76,7 +77,7 @@ impl CargoCrane<'_> {
         result
     }
 
-    pub fn unload_crates(&mut self, crates: &mut Vec<String>, index: usize) -> () {
+    pub fn unload_crates(&mut self, crates: &mut Vec<String>, index: usize) {
         self.ship.crate_stack[index].append(crates);
     }
 }
@@ -166,7 +167,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     };
 
     let path = Path::new(INPUT_FILE_PATH);
-    let file = File::open(&path)?;
+    let file = File::open(path)?;
 
     let re: Regex = Regex::new(r"move (?P<quantity>\d+) from (?P<from>\d+) to (?P<to>\d+)")?;
 

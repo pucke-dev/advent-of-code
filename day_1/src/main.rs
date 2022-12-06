@@ -7,7 +7,7 @@ struct Elve {
 }
 
 impl Elve {
-    fn add_item(&mut self, item: i32) -> () {
+    fn add_item(&mut self, item: i32) {
         self.items.push(item)
     }
     fn get_total_calories(&self) -> i32 {
@@ -36,7 +36,7 @@ impl Ord for Elve {
     }
 }
 
-fn print_elves_leaderboard(elves: &mut Vec<Elve>, mut top_n: usize) -> () {
+fn print_elves_leaderboard(elves: &mut Vec<Elve>, mut top_n: usize) {
     if top_n > elves.len() {
         top_n = elves.len();
     }
@@ -52,7 +52,7 @@ fn print_elves_leaderboard(elves: &mut Vec<Elve>, mut top_n: usize) -> () {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let path = Path::new(INPUT_FILE_PATH);
-    let file = File::open(&path)?;
+    let file = File::open(path)?;
 
     let mut elves: Vec<Elve> = vec![Elve { items: vec![] }];
 
