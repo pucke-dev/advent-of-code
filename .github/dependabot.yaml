@@ -1,0 +1,61 @@
+version: 2
+updates:
+  - package-ecosystem: "cargo"
+    directory: "/day_1"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # These are peer deps of Cargo and should not be automatically bumped
+      - dependency-name: "semver"
+      - dependency-name: "crates-io"
+    rebase-strategy: "disabled"
+
+  - package-ecosystem: "cargo"
+    directory: "/day_2"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # These are peer deps of Cargo and should not be automatically bumped
+      - dependency-name: "semver"
+      - dependency-name: "crates-io"
+    rebase-strategy: "disabled"
+
+  - package-ecosystem: "cargo"
+    directory: "/day_3"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # These are peer deps of Cargo and should not be automatically bumped
+      - dependency-name: "semver"
+      - dependency-name: "crates-io"
+    rebase-strategy: "disabled"
+
+  - package-ecosystem: "cargo"
+    directory: "/day_4"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # These are peer deps of Cargo and should not be automatically bumped
+      - dependency-name: "semver"
+      - dependency-name: "crates-io"
+    rebase-strategy: "disabled"
+
+  - package-ecosystem: "cargo"
+    directory: "/day_5"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # These are peer deps of Cargo and should not be automatically bumped
+      - dependency-name: "semver"
+      - dependency-name: "crates-io"
+    rebase-strategy: "disabled"
+
+  - package-ecosystem: "cargo"
+    directory: "/day_6"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # These are peer deps of Cargo and should not be automatically bumped
+      - dependency-name: "semver"
+      - dependency-name: "crates-io"
+    rebase-strategy: "disabled"
