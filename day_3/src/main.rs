@@ -64,7 +64,7 @@ fn get_char_value(char: &char) -> i32 {
         'X' => 50,
         'Y' => 51,
         'Z' => 52,
-        _ => panic!("Invalid char")
+        _ => panic!("Invalid char"),
     }
 }
 
@@ -72,15 +72,18 @@ fn split_in_half(string: &String) -> (&str, &str) {
     string.split_at(string.len() / 2)
 }
 
-fn get_backpacks_from<'a>(chunk: Chunk<'a, Lines<BufReader<&'a File>>>) -> Result<(HashSet<char>, HashSet<char>, HashSet<char>), String> {
-    let mut backpacks: (HashSet<char>,HashSet<char>,HashSet<char>) = (HashSet::new(), HashSet::new(), HashSet::new());
+fn get_backpacks_from<'a>(
+    chunk: Chunk<'a, Lines<BufReader<&'a File>>>,
+) -> Result<(HashSet<char>, HashSet<char>, HashSet<char>), String> {
+    let mut backpacks: (HashSet<char>, HashSet<char>, HashSet<char>) =
+        (HashSet::new(), HashSet::new(), HashSet::new());
 
     for (index, content) in chunk.enumerate() {
         match index {
             0 => backpacks.0 = HashSet::from_iter(content.expect("Could not parse").chars()),
             1 => backpacks.1 = HashSet::from_iter(content.expect("Could not parse").chars()),
             2 => backpacks.2 = HashSet::from_iter(content.expect("Could not parse").chars()),
-            _ => return Err("I did not expect that many elements".to_string())
+            _ => return Err("I did not expect that many elements".to_string()),
         };
     }
 
@@ -106,17 +109,24 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    println!("Duplicate item in compartment sum: {}", duplicate_item_in_compartments_sum);
+    println!(
+        "Duplicate item in compartment sum: {}",
+        duplicate_item_in_compartments_sum
+    );
 
     // Reset File to read from start
-    file.seek(SeekFrom::Start(0)).expect("Could not reset file buffer");
+    file.seek(SeekFrom::Start(0))
+        .expect("Could not reset file buffer");
 
     let mut all_badges_sum = 0;
     for chunk in &BufReader::new(&file).lines().chunks(3) {
         let backpacks = get_backpacks_from(chunk).expect("Could not get backpacks");
 
-        let common_items = backpacks.0.iter().filter(|k| [&backpacks.1, &backpacks.2].iter().all(|s| s.contains(k)));
-        let group_sum = common_items.fold(0, |a, b| { a + get_char_value(b) });
+        let common_items = backpacks
+            .0
+            .iter()
+            .filter(|k| [&backpacks.1, &backpacks.2].iter().all(|s| s.contains(k)));
+        let group_sum = common_items.fold(0, |a, b| a + get_char_value(b));
         all_badges_sum += group_sum;
     }
 

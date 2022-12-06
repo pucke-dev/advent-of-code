@@ -19,11 +19,30 @@ struct Instruction {
 
 impl Instruction {
     pub fn parse_line(line: String, re: &Regex) -> Result<Instruction, String> {
-        let captures = re.captures(line.as_str()).expect("Could not gather capture groups");
+        let captures = re
+            .captures(line.as_str())
+            .expect("Could not gather capture groups");
 
-        let quantity = captures.name("quantity").expect("Capture group not found").as_str().parse::<usize>().expect("Parsing error");
-        let from = captures.name("from").expect("Capture group not found").as_str().parse::<usize>().expect("Parsing error") - 1;
-        let to = captures.name("to").expect("Capture group not found").as_str().parse::<usize>().expect("Parsing error") - 1;
+        let quantity = captures
+            .name("quantity")
+            .expect("Capture group not found")
+            .as_str()
+            .parse::<usize>()
+            .expect("Parsing error");
+        let from = captures
+            .name("from")
+            .expect("Capture group not found")
+            .as_str()
+            .parse::<usize>()
+            .expect("Parsing error")
+            - 1;
+        let to = captures
+            .name("to")
+            .expect("Capture group not found")
+            .as_str()
+            .parse::<usize>()
+            .expect("Parsing error")
+            - 1;
 
         Ok(Instruction { quantity, from, to })
     }
@@ -31,24 +50,28 @@ impl Instruction {
 
 enum CrateMover {
     V9000,
-    V9001
+    V9001,
 }
 
 struct CargoCrane<'a> {
     ship: &'a mut Ship,
-    version: CrateMover
+    version: CrateMover,
 }
 
 impl CargoCrane<'_> {
     pub fn lift_crates(&mut self, index: usize, quantity: usize) -> Vec<String> {
         let mut result = vec![];
         for _ in 0..quantity {
-            result.push(self.ship.crate_stack[index].pop().expect("Nothing to pop here"));
+            result.push(
+                self.ship.crate_stack[index]
+                    .pop()
+                    .expect("Nothing to pop here"),
+            );
         }
 
         match self.version {
             CrateMover::V9000 => (),
-            CrateMover::V9001 => result.reverse()
+            CrateMover::V9001 => result.reverse(),
         };
         result
     }
@@ -61,22 +84,86 @@ impl CargoCrane<'_> {
 fn main() -> Result<(), Box<dyn Error>> {
     let mut ship = Ship {
         crate_stack: vec![
-            vec![String::from("V"), String::from("C"), String::from("W"), String::from("L"), String::from("R"), String::from("M"), String::from("F"), String::from("Q")],
+            vec![
+                String::from("V"),
+                String::from("C"),
+                String::from("W"),
+                String::from("L"),
+                String::from("R"),
+                String::from("M"),
+                String::from("F"),
+                String::from("Q"),
+            ],
             vec![String::from("L"), String::from("Q"), String::from("D")],
-            vec![String::from("B"), String::from("N"), String::from("C"), String::from("W"), String::from("G"), String::from("R"), String::from("S"), String::from("P")],
-            vec![String::from("G"), String::from("Q"), String::from("B"), String::from("H"), String::from("D"), String::from("C"), String::from("L")],
-            vec![String::from("S"), String::from("Z"), String::from("F"), String::from("L"), String::from("G"), String::from("V")],
-            vec![String::from("P"), String::from("N"), String::from("G"), String::from("D")],
-            vec![String::from("W"), String::from("C"), String::from("F"), String::from("V"), String::from("P"), String::from("Z"), String::from("D")],
-            vec![String::from("S"), String::from("M"), String::from("D"), String::from("P"), String::from("C")],
-            vec![String::from("C"), String::from("P"), String::from("M"), String::from("V"), String::from("T"), String::from("W"), String::from("N"), String::from("Z")],
-        ]
+            vec![
+                String::from("B"),
+                String::from("N"),
+                String::from("C"),
+                String::from("W"),
+                String::from("G"),
+                String::from("R"),
+                String::from("S"),
+                String::from("P"),
+            ],
+            vec![
+                String::from("G"),
+                String::from("Q"),
+                String::from("B"),
+                String::from("H"),
+                String::from("D"),
+                String::from("C"),
+                String::from("L"),
+            ],
+            vec![
+                String::from("S"),
+                String::from("Z"),
+                String::from("F"),
+                String::from("L"),
+                String::from("G"),
+                String::from("V"),
+            ],
+            vec![
+                String::from("P"),
+                String::from("N"),
+                String::from("G"),
+                String::from("D"),
+            ],
+            vec![
+                String::from("W"),
+                String::from("C"),
+                String::from("F"),
+                String::from("V"),
+                String::from("P"),
+                String::from("Z"),
+                String::from("D"),
+            ],
+            vec![
+                String::from("S"),
+                String::from("M"),
+                String::from("D"),
+                String::from("P"),
+                String::from("C"),
+            ],
+            vec![
+                String::from("C"),
+                String::from("P"),
+                String::from("M"),
+                String::from("V"),
+                String::from("T"),
+                String::from("W"),
+                String::from("N"),
+                String::from("Z"),
+            ],
+        ],
     };
     for crate_stack in &mut ship.crate_stack {
         crate_stack.reverse()
     }
 
-    let mut crane = CargoCrane{ship: &mut ship, version: CrateMover::V9000};
+    let mut crane = CargoCrane {
+        ship: &mut ship,
+        version: CrateMover::V9000,
+    };
 
     let path = Path::new(INPUT_FILE_PATH);
     let file = File::open(&path)?;
@@ -92,7 +179,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     print!("The crates on top are: ");
     for crate_stack in &ship.crate_stack {
-        print!("{}", crate_stack[crate_stack.len()-1])
+        print!("{}", crate_stack[crate_stack.len() - 1])
     }
 
     Ok(())

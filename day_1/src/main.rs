@@ -1,4 +1,4 @@
-use std::{cmp::Ordering, error::Error, fs::File, io::BufReader, io::prelude::*, path::Path};
+use std::{cmp::Ordering, error::Error, fs::File, io::prelude::*, io::BufReader, path::Path};
 
 const INPUT_FILE_PATH: &str = "src/input.txt";
 
@@ -25,7 +25,8 @@ impl PartialEq<Self> for Elve {
 
 impl PartialOrd<Self> for Elve {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.get_total_calories().partial_cmp(&other.get_total_calories())
+        self.get_total_calories()
+            .partial_cmp(&other.get_total_calories())
     }
 }
 
@@ -41,7 +42,11 @@ fn print_elves_leaderboard(elves: &mut Vec<Elve>, mut top_n: usize) -> () {
     }
 
     for (index, elve) in elves[elves.len() - top_n..].iter().rev().enumerate() {
-        println!("{}. Elve carries {} calories", index + 1, elve.get_total_calories());
+        println!(
+            "{}. Elve carries {} calories",
+            index + 1,
+            elve.get_total_calories()
+        );
     }
 }
 
@@ -68,7 +73,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     elves.sort();
     print_elves_leaderboard(&mut elves, 10);
 
-    println!("Top 3 Elve's have {} calories in total", elves[elves.len() - 3..].iter().fold(0, |a, b| { a + b.get_total_calories() }));
+    println!(
+        "Top 3 Elve's have {} calories in total",
+        elves[elves.len() - 3..]
+            .iter()
+            .fold(0, |a, b| { a + b.get_total_calories() })
+    );
 
     Ok(())
 }

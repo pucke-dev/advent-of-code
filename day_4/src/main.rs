@@ -33,7 +33,7 @@ fn parse_line_into_sections(line: String) -> (Section, Section) {
         Section {
             start: s2_start.parse::<i32>().expect("Could not parse to i32"),
             end: s2_end.parse::<i32>().expect("Could not parse to i32"),
-        }
+        },
     )
 }
 
@@ -55,8 +55,14 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    println!("Number of fully overlapping sections: {}", fully_overlapping_sections);
-    println!("Number of partially overlapping sections: {}", partially_overlapping_sections);
+    println!(
+        "Number of fully overlapping sections: {}",
+        fully_overlapping_sections
+    );
+    println!(
+        "Number of partially overlapping sections: {}",
+        partially_overlapping_sections
+    );
 
     Ok(())
 }
