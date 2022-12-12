@@ -3,9 +3,6 @@ const INPUT_FILE_PATH: &str = "day_10/src/input.txt";
 use std::error::Error;
 use std::fs::read_to_string;
 
-const COLS: usize = 40;
-const ROWS: usize = 6;
-
 struct Cpu {
     clock_cycle: usize,
     register: i32,
@@ -25,10 +22,20 @@ impl Cpu {
 }
 
 struct Crt {
+    #[allow(dead_code)]
+    rows: usize,
+    cols: usize,
     pixels: Vec<String>,
 }
 
 impl Crt {
+    pub fn new(rows: usize, cols: usize) -> Self {
+        Crt {
+            rows,
+            cols,
+            pixels: vec![" ".to_string(); (cols + 1) * rows],
+        }
+    }
     fn display(&self) {
         for (index, pixel) in self.pixels.iter().enumerate() {
             if index % 40 == 0 {
@@ -53,16 +60,14 @@ fn main() -> Result<(), Box<dyn Error>> {
         clock_cycle: 1,
         register: 1,
     };
-    let mut crt = Crt {
-        pixels: vec![" ".to_string(); (COLS + 1) * ROWS],
-    };
+    let mut crt = Crt::new(6, 40);
 
     for line in input.lines() {
         if signal_of_interest(cpu.clock_cycle) {
             total_signal_strength += cpu.clock_cycle * cpu.register as usize;
         }
 
-        crt.pixels[cpu.clock_cycle] = cpu.compute_pixel((cpu.clock_cycle - 1) % COLS);
+        crt.pixels[cpu.clock_cycle] = cpu.compute_pixel((cpu.clock_cycle - 1) % crt.cols);
 
         cpu.clock_cycle += 1;
 
@@ -72,7 +77,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 total_signal_strength += cpu.clock_cycle * cpu.register as usize;
             }
 
-            crt.pixels[cpu.clock_cycle] = cpu.compute_pixel((cpu.clock_cycle - 1) % COLS);
+            crt.pixels[cpu.clock_cycle] = cpu.compute_pixel((cpu.clock_cycle - 1) % crt.cols);
 
             cpu.register += num.parse::<i32>().expect("`num` should be an i32");
             cpu.clock_cycle += 1;
