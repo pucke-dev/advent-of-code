@@ -102,13 +102,7 @@ fn main() {
             inspected_items: 0,
             operation: |item: &mut Item| item.0 += 1,
             divide_by: 17,
-            test: |item: &Item| {
-                if item.0 % 17 == 0 {
-                    0
-                } else {
-                    1
-                }
-            },
+            test: |item: &Item| usize::from(item.0 % 17 != 0),
         },
         Monkey {
             starting_items: VecDeque::from(vec![Item(94), Item(91), Item(51), Item(63)]),
